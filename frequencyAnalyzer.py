@@ -2,6 +2,9 @@
 import codecs
 import sys
 import argparse
+import time
+
+start_time = time.time()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--file", help="Nombre de la lista")
@@ -91,7 +94,7 @@ def SearchDistance(texto, msgList):
     for x in range(len(msgList)):
         position = 0
         stringPosition = ''
-        stringChart = str(msgList[x]) + ': '
+        stringChart = str(msgList[x]) + ': \nPositions: '
         stringDistance =  ''
         cont = 0
         
@@ -102,13 +105,13 @@ def SearchDistance(texto, msgList):
             else:
                 position = texto.find(msgList[x], position)
                 cont+=1
-            stringPosition += str(position + 1) + ' '
+            stringPosition += str(position + 1) + '  '
             posList += 1
         
             if posList >= len(msgList):
                 posList = 0
             if msgList[x] != msgList[posList]:
-                dataReport += stringChart + stringPosition + '\nDistances: '  + stringDistance[:-4] + '\n\n'
+                dataReport += stringChart + stringPosition + '\nDistances:   '  + stringDistance[:-4] + '\n\n'
                      
     return dataReport
 
@@ -133,5 +136,6 @@ if (len(sys.argv) == 5):
         file2.write(graph + '\n')
         file.close()
         file2.close()
+        print('\nTiempo de Ejecución:' + str(time.time()-start_time) + 'seg.\n')
 else:
     print('Uso: -f [archivo Lista] -n  [Numero de palabras]')
