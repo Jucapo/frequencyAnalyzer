@@ -34,13 +34,12 @@ def ExtractList(message, n_grama):
         _temp = ''  # se almacena cada caracter hasta que se cumpla la longitud de n_grama
         for y in range(n_grama):
             if (x+y) < _lLen:               
-                _temp += _list[x+y] # se lee y almacena el caracter acomulando en la variable _temp
+                _temp += _list[x+y]
             else:
                 continue
         else:
-            if(len(_temp) == n_grama):  # Cuando la longitud es la ideal, se agregan los caracteres a la lista
+            if(len(_temp) == n_grama): 
                 msgList.append(_temp)
-
     msgList.sort() 
     return msgList
 
@@ -50,18 +49,16 @@ def SearchFrequency(msgList):
     posList = 0
     for x in range(len(msgList)):
         count = 0
-        # mientras los datos recorridos sean iguales, se aumenta la frecuencia de este
+        # se recorre la lista buscando los iguales y contando sus repeticiones
         while msgList[x] == msgList[posList]:
-            count += 1  # es la variable que lleva la cantidad de veces que se repite un mismo caracter
+            count += 1  #numero de repeticiones
             posList += 1
             if posList >= len(msgList):
                 posList = 0
-                
         else:
-            if count > 0:  # Si se confirma que el contador es mayor que cero, existe 1 o mas veces el caracter
-                # por lo tanto se agrega el caracter y su contador en una matriz
+            if count > 0: # mas de una repecion ? Si -> se agrega a la matriz
                 matriz.append([msgList[x], count])
-    return matriz  # por ultimo se devuelve la matriz con todos los datos y sus frecuencias
+    return matriz  #  matriz con todas las cadenas y sus frecuencias
 
 
 def OrganizeData(matriz, n_grama, dataDistance):
@@ -74,12 +71,12 @@ def OrganizeData(matriz, n_grama, dataDistance):
     MAX = matriz[len(matriz)-1][1]
 
     for x in range(0, len(matriz)):
-        if (x % 5 == 0):  # en grupos de 5 se almacenan en una variable para despues llevar a un archivo
+        if (x % 5 == 0):  # se organizan las frecuencias en grupos de 5
             frequency += '\n'
         frequency += ''+str(matriz[x][0])+':	'+str(matriz[x][1])+'		'
 
         por = round(matriz[x][1]*100/MAX)
-        if(por >= 10):  # se buscan las frecuencias mas altas al 10% omitir los valores menos importantes
+        if(por >= 10):  # se buscan las frecuencias que superen el rango del 10% 
             if (x % 1 == 0):
                 data += '\n '  
                 data += '	'+str(matriz[x][0])+':	' + \
