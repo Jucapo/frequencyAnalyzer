@@ -61,7 +61,7 @@ def SearchFrequency(msgList):
     return matriz  #  matriz con todas las cadenas y sus frecuencias
 
 
-def OrganizeData(matriz, n_grama, dataDistance):
+def OrganizeData(matriz, n_grama):
 
     text = '\nAnalisis Frecuencias Tamaño  n = ' + str(n_grama) + '\n'
     data = ''
@@ -81,7 +81,7 @@ def OrganizeData(matriz, n_grama, dataDistance):
                 data += '\n '  
                 data += '	'+str(matriz[x][0])+':	' + \
                     (var*por)+' 	'+str(matriz[x][1])
-    frequency += '\n\n' + dataDistance + '\n'
+    frequency += '\n\n'
 
     return (text + data)  
 
@@ -108,35 +108,39 @@ def SearchDistance(texto, msgList):
             if posList >= len(msgList):
                 posList = 0
             if msgList[x] != msgList[posList]:
-                dataReport += stringChart + stringPosition + '\nDistances:   '  + stringDistance[:-4] + '\n\n'
-                     
-    return dataReport
+                file3.write(stringChart + stringPosition + '\nDistances:   '  + stringDistance[:-4] + '\n\n') 
+    
 
 if (len(sys.argv) == 5):
     if (args.file and args.num):
-        textFile = open(str(args.file), 'r', encoding='utf-8')
+        textFile = open(str(args.file), 'r', encoding='ISO-8859-1')
         texto = textFile.read().upper().replace(' ', '')
         textFile.close()
 
         n_grama = int(args.num)
+        file3 = open('reportes/reporte_distancias.txt', 'w')
 
         for x in range(1, n_grama+1):
             msgList = ExtractList(texto, x)
-            dataDistance = SearchDistance(texto, msgList)
+            SearchDistance(texto, msgList)
             matriz = SearchFrequency(msgList)
-            data = OrganizeData(matriz, x , dataDistance)
+            data = OrganizeData(matriz, x)
             graph += data
 
-        file = open('reporte_frecuencias.txt', 'w' , encoding='utf-8', errors = 'ignore')
-        file2 = open('grafico_frecuencias.txt', 'w', encoding='utf-8', errors = 'ignore')
+        file = open('reportes/reporte_frecuencias.txt', 'w')
         file.write(frequency + '\n')
-        file2.write(graph + '\n')
         file.close()
+
+        with open('reportes/grafico_frecuencias.txt', "w", encoding="utf-8") as file2:
+            file2.write(graph)
         file2.close()
+
+        file3.close()
         print('\nTiempo de Ejecución:' + str(time.time()-start_time) + 'seg.\n')
+
 else:
     print('\n\nUniversidad Autonoma de Occidente')
     print('  Juan Camilo Posso Ponce')
     print('  Jairo Torres\n\n')
     print('Referencias: Juan Carlos Trillos  (https://github.com/juanktrillos/Ply_Afp)\n\n')
-    print('Uso: python frequencyAnalyzer.py -f Lista.txt -n  n-gramas \n\nEjemplo: python frequencyAnalyzer.py -f archivo.txt -n  3 \n\n')
+    print('Uso: python3 frequencyAnalyzer.py -f Lista.txt -n  n-gramas \n\nEjemplo: python frequencyAnalyzer.py -f archivo.txt -n  3 \n\n')
