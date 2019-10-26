@@ -8,7 +8,8 @@ start_time = time.time()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--file", help="Nombre de la lista")
-parser.add_argument("-n", "--num", help="Numero de palabras")
+parser.add_argument("-n", "--num1", help="n-grama inicio")
+parser.add_argument("-m", "--num2", help="n-grama final")
 args = parser.parse_args()
 
 
@@ -111,16 +112,17 @@ def SearchDistance(texto, msgList):
                 file3.write(stringChart + stringPosition + '\nDistances:   '  + stringDistance[:-4] + '\n\n') 
     
 
-if (len(sys.argv) == 5):
-    if (args.file and args.num):
+if (len(sys.argv) == 7):
+    if (args.file and args.num1 and args.num2):
         textFile = open(str(args.file), 'r', encoding='ISO-8859-1')
         texto = textFile.read().upper().replace(' ', '')
         textFile.close()
 
-        n_grama = int(args.num)
+        n_gramaI = int(args.num1)
+        n_gramaF = int(args.num2)
         file3 = open('reportes/reporte_distancias.txt', 'w')
 
-        for x in range(3, n_grama+1):
+        for x in range(n_gramaI, n_gramaF+1):
             msgList = ExtractList(texto, x)
             SearchDistance(texto, msgList)
             matriz = SearchFrequency(msgList)
@@ -151,4 +153,4 @@ else:
 	2019-II
     """)
     print('Referencias: Juan Carlos Trillos  (https://github.com/juanktrillos/Ply_Afp)\n\n')
-    print('Uso: python3 frequencyAnalyzer.py -f Lista.txt -n  n-gramas \n\nEjemplo: python frequencyAnalyzer.py -f archivo.txt -n  3 \n\n')
+    print('Uso: python3 frequencyAnalyzer.py -f Lista.txt -n  n-grama-inicial -m n-grama-final \n\nEjemplo: python frequencyAnalyzer.py -f archivo.txt -n  3 -m 5 \n\n')
