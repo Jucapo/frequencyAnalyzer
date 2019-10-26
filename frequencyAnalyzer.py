@@ -135,4 +135,8 @@ if (len(sys.argv) == 5):
         file2.close()
         print('\nTiempo de Ejecución:' + str(time.time()-start_time) + 'seg.\n')
 else:
-    print('Uso: -f [archivo Lista] -n  [Numero de palabras]')
+    print('\n\nUniversidad Autonoma de Occidente')
+    print('  Juan Camilo Posso Ponce')
+    print('  Jairo Torres\n\n')
+    print('Referencias: Juan Carlos Trillos  (https://github.com/juanktrillos/Ply_Afp)\n\n')
+    print('Uso: python frequencyAnalyzer.py -f Lista.txt -n  n-gramas \n\nEjemplo: python frequencyAnalyzer.py -f archivo.txt -n  3 \n\n')
