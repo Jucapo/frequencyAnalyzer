@@ -120,7 +120,7 @@ if (len(sys.argv) == 5):
         n_grama = int(args.num)
         file3 = open('reportes/reporte_distancias.txt', 'w')
 
-        for x in range(1, n_grama+1):
+        for x in range(3, n_grama+1):
             msgList = ExtractList(texto, x)
             SearchDistance(texto, msgList)
             matriz = SearchFrequency(msgList)
